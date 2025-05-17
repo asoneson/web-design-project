@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#ffffff">
+    <title>Title</title>
+  </head>
+  <body>
+    <div id="left" class="border"></div>
+    <div id="right" class="border"></div>
+    <div id="spacer"></div>
+    <div class="main">
+      <div class="heading">
+        <div class="title">Apple's Widget Animation Workaround
+          <br>
+          <span id="subtitle">iOS App Development</span>
+        </div>
+      </div>
+      <div class="content">
+        <h1 class="main-title">Swift and SwiftUI</h1>
+        <p>Swift is a relatively young programming language developed by Apple as a means of creating and interacting with their hardware, software, and services in a more intuitive and meaningful way. It has simple, modern syntax that is decently easy to understand, similar to languages like Python. It has all the main capabilities of a coding language, but its real power is in the packages it uses.</p>
+        <p>SwiftUI is a framework for Swift that Apple themselves develop. It's intended to be used by developers specifically to design and program apps in Apple's operating systems: iOS, iPadOS, macOS, visionOS, watchOS, audioOS, and tvOS. It includes templates for user interface (UI) elements, actions, APIs, etc.</p>
+        <h1 class="main-title">WidgetKit Framework</h1>
+        <p>WidgetKit is a sort of subcategory of SwiftUI that provides developers with a way to create widgets—the large components on many iPhone home screens that contain useful at-a-glance information, as shown below—for their apps. It’s very useful, but it has limitations. For example, it is, as of now, unable to perform smooth animations. The information displayed can update, but only at a long interval—i.e. every five minutes or so. This works if we want our weather widget to display an up-to-date forecast, but if we want a playful animation of a cat playing with a ball of yarn on the homescreen, we’re out of luck. </p>
+        <div class="image-and-caption">
+          <img class="image" src="widget.png" alt="An example of a widget">
+          <p class="caption">The Clock widget in iOS.</p>
+        </div>
+        <p>Funnily enough, this isn’t because Apple is unable to make smooth animations work for developers. In fact, they literally have system widgets of their own that feature smooth animations, such as the analog clock widget. For whatever reason, they just make the function that allows this to happen private, so that only their own software engineers can use it.</p>
+        <h1 class="main-title">The Workaround</h1>
+        <p>Developers, being the intelligent and resourceful people they often are, found an extremely clever way around this, albeit very complicated and not very convenient. Instead of using a dedicated function, we can use a series of numbered timers, each delayed by a fraction of a second. For example, to achieve 30 frames per second, one would have to use 30 timers, each delayed by intervals of 1/30th of a second. But how do timers achieve anything? This is the interesting part.</p>
+        <h1 class="main-title">Custom Typefaces</h1>
+        <p>To make the timer display images instead of numbers, we can create a custom font that replaces the numbers. Scale up the last digit in the timer to fill the entire widget, and now we have a cycle of images. However, there’s a problem with this. There are only ten numbers that can be displayed on a single timer digit, and therefore only ten frames that can be had in our animation.</p>
+        <p>To get around this, we can use typographic ligatures. Typographic ligatures, as displayed below, are a method of combining letters to create a smoother, more concise look for the typeface. This can be exploited to create far more frames in the animation. For example, we can tell our custom font that if it sees the number 6 directly following the number 4, it should display a certain image. This will result in that image appearing in place of a 46 on the timer. With two digits, this allows for 60 potential frames. However, this can be pushed far further. We can use ligatures with three or even four characters (excluding the colon in the timer), making far more frames possible.</p>
+        <div class="image-and-caption2">
+          <img class="image" src="ligatures.jpg" alt="Examples of typographic ligatures">
+          <p class="caption">Some examples of typographic ligatures.</p>
+        </div>
+        <h1 class="main-title">The Conclusion</h1>
+        <p>When using these exploits in tandem, we can achieve high-quality animation. And, despite there being 30 timers running at the same time, SwiftUI is optimized to the point that it can easily handle it. Even though each timer has a different image, SwiftUI automatically loads these in the background before showing them. It might lag for a split second upon loading the widget, but after that it should be smooth sailing.</p>
+        <div id="spacer"></div>
+        <div id="footer">
+          Aram Soneson
+          <br>
+          Careers Period 7
+          <br>
+          Information Technology Career Cluster
+          <br>
+          Website Design and Development Project
+          <br>
+          2025
+        </div>
+        <div id="bottom-spacer"></div>
+      </div>
+    </div>
+  </body>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      font-family: 'Geist', sans-serif;
+      background-color: #ffffff;
+    }
+
+    .border {
+      height: calc(100vh + 20px);
+      width: calc(50vw - 725px);
+      position: fixed;
+      top: -10px;
+      background-color: #333333;
+      z-index: 1;
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+
+    #left {
+      left: -10px;
+    }
+
+    #right {
+      right: -10px;
+    }
+
+    #spacer {
+      height: 250px;
+    }
+
+    .main {
+      margin: 0 auto;
+      width: 1125px;
+      height: 100vh;
+    }
+
+    .heading .title {
+      font-weight: 600;
+      font-size: 32px;
+      float: left;
+      color: #ff0652;
+    }
+
+    .heading .title #subtitle {
+      color: #000;
+    }
+
+    .content {
+      line-height: 1.5;
+      padding-top: 80px;
+      clear: both;
+      font-size: 18px;
+    }
+    
+    .content .main-title {
+      font-weight: 550;
+      font-size: 32px;
+      margin-bottom: -15px;
+    }
+
+    .content .image-and-caption .image {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-inline: auto;
+      margin-top: 50px;
+      border-radius: 15px;
+      height: 400px;
+    }
+    
+    .content .image-and-caption .caption {
+      font-size: 16px;
+      color: #9c9c9c;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 50px;
+    }
+
+    .content .image-and-caption2 .image {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      margin-inline: auto;
+      margin-top: 50px;
+      border-radius: 15px;
+      height: 300px;
+    }
+    
+    .content .image-and-caption2 .caption {
+      font-size: 16px;
+      color: #9c9c9c;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 50px;
+    }
+    
+    .content #footer {
+      text-align: center;
+      height: 160px;
+    }
+    
+    .content #spacer {
+      height: 50px;
+    }
+
+    .content #bottom-spacer {
+      height: 80px;
+    }
+  </style>
+</html>
